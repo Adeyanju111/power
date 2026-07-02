@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Battery Charging Time Calculator – PowerCalc | GenNext Technologies</title>
+  <meta name="description" content="Calculate how long to fully charge your battery? instantly. Free Battery Charging Time Calculator with detailed results and FAQs." />
+  <link rel="canonical" href="https://yourdomain.com/tools/battery-charging-time-calculator.html" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet" />
+  
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{"@type":"Question","name":"Why is charge efficiency important?","acceptedAnswer":{"@type":"Answer","text":"Not all energy goes into storage; some is lost as heat. Lead‑acid is ~85%, lithium ~95%."}}]
+    }
+    </script>
+  
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Inter',sans-serif; background:#f4f7fb; color:#1e293b; padding:20px; }
+    a { text-decoration:none; }
+    .container { max-width:1280px; margin:0 auto; }
+    .header {
+      display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;
+      background:#fff; padding:18px 28px; border-radius:18px; box-shadow:0 4px 12px rgba(0,0,0,0.04);
+      margin-bottom:24px; border:1px solid #e9edf2;
+    }
+    .header-left { display:flex; align-items:center; gap:12px; }
+    .header-left .logo { font-size:28px; color:#0b7e3d; }
+    .header-left h1 { font-size:22px; font-weight:700; color:#0b2b3b; }
+    .header-left h1 span { color:#0b7e3d; }
+    .header-left .tagline { font-size:13px; color:#64748b; margin-left:4px; }
+    .header-left .tagline strong { color:#0b7e3d; }
+    .ad-placeholder {
+      background:#f1f5f9; border:1px dashed #cbd5e1; border-radius:10px;
+      padding:8px 28px; font-size:12px; color:#94a3b8; min-height:52px;
+      display:flex; align-items:center; justify-content:center; min-width:200px;
+    }
+    .ad-placeholder i { margin-right:8px; }
+    .tool-detail {
+      background:#fff; border-radius:18px; padding:28px 30px 32px;
+      box-shadow:0 4px 16px rgba(0,0,0,0.04); border:1px solid #eef2f6; margin-bottom:28px;
+    }
+    .detail-header { display:flex; align-items:center; gap:14px; margin-bottom:22px; padding-bottom:14px; border-bottom:1px solid #f1f5f9; flex-wrap:wrap; }
+    .detail-header .icon { font-size:28px; color:#0b7e3d; background:#e8f5ee; width:48px; height:48px; display:flex; align-items:center; justify-content:center; border-radius:12px; }
+    .detail-header h2 { font-size:20px; font-weight:700; color:#0b2b3b; }
+    .detail-header .sub { font-size:13px; color:#94a3b8; }
+    .btn-back { background:#f1f5f9; border:none; padding:8px 18px; border-radius:30px; font-size:13px; font-weight:500; color:#475569; cursor:pointer; transition:0.2s; margin-left:auto; display:flex; align-items:center; gap:8px; }
+    .btn-back:hover { background:#e2e8f0; }
+    .calc-row { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:18px 24px; margin:16px 0 20px; }
+    .calc-group { display:flex; flex-direction:column; gap:4px; }
+    .calc-group label { font-size:13px; font-weight:500; color:#475569; }
+    .calc-group label .unit { font-weight:400; color:#94a3b8; }
+    .calc-group input { padding:10px 14px; border:1px solid #dce2ea; border-radius:10px; font-size:15px; font-family:'Inter',sans-serif; background:#fafcff; transition:0.2s; color:#0b2b3b; width:100%; }
+    .calc-group input:focus { outline:none; border-color:#0b7e3d; box-shadow:0 0 0 3px rgba(11,126,61,0.12); background:#fff; }
+    .calc-actions { display:flex; flex-wrap:wrap; gap:12px; margin:8px 0 14px; align-items:center; }
+    .btn-calc { background:#0b7e3d; color:#fff; border:none; padding:10px 32px; border-radius:30px; font-size:15px; font-weight:600; cursor:pointer; transition:0.2s; font-family:'Inter',sans-serif; }
+    .btn-calc:hover { background:#096b33; box-shadow:0 4px 14px rgba(11,126,61,0.25); }
+    .btn-reset { background:#f1f5f9; color:#475569; border:none; padding:10px 22px; border-radius:30px; font-size:14px; font-weight:500; cursor:pointer; transition:0.2s; font-family:'Inter',sans-serif; }
+    .btn-reset:hover { background:#e2e8f0; }
+    .result-box { background:#f8fafc; border-radius:14px; padding:20px 24px; margin-top:16px; border-left:4px solid #0b7e3d; display:none; }
+    .result-box.show { display:block; }
+    .result-box .label { font-size:13px; color:#64748b; font-weight:500; text-transform:uppercase; letter-spacing:0.4px; }
+    .result-box .value { font-size:30px; font-weight:700; color:#0b2b3b; margin:4px 0 2px; }
+    .result-box .value .unit { font-size:18px; font-weight:500; color:#64748b; margin-left:6px; }
+    .result-box .note { font-size:14px; color:#475569; margin-top:4px; }
+    .faq-section { margin-top:32px; padding-top:24px; border-top:2px solid #f1f5f9; }
+    .faq-section h3 { font-size:20px; font-weight:600; margin-bottom:16px; color:#0b2b3b; }
+    .faq-item { border:1px solid #eef2f6; border-radius:10px; margin-bottom:8px; overflow:hidden; }
+    .faq-question { width:100%; background:#fff; border:none; padding:14px 20px; font-size:15px; font-weight:500; text-align:left; cursor:pointer; display:flex; justify-content:space-between; align-items:center; color:#1e293b; transition:0.2s; }
+    .faq-question:hover { background:#f8fafc; }
+    .faq-question .faq-toggle { font-size:20px; color:#94a3b8; transition:0.2s; }
+    .faq-question[aria-expanded="true"] .faq-toggle { transform:rotate(45deg); }
+    .faq-answer { padding:0 20px 20px; background:#fafcff; color:#475569; line-height:1.6; }
+    .footer { text-align:center; padding:24px 0 10px; font-size:13px; color:#94a3b8; border-top:1px solid #eef2f6; margin-top:12px; }
+    .footer a { color:#0b7e3d; }
+    .footer .brand { font-weight:500; color:#0b2b3b; }
+    @media (max-width:768px) {
+      .header { flex-direction:column; align-items:stretch; padding:16px 20px; }
+      .header-left h1 { font-size:19px; }
+      .ad-placeholder { min-height:44px; padding:6px 16px; font-size:11px; }
+      .tool-detail { padding:18px 16px 24px; }
+      .calc-row { grid-template-columns:1fr; gap:12px; }
+      .result-box .value { font-size:24px; }
+      .btn-calc { width:100%; justify-content:center; }
+      .calc-actions { flex-direction:column; }
+      .btn-reset { width:100%; justify-content:center; }
+      .detail-header .btn-back { margin-left:0; width:100%; justify-content:center; }
+    }
+    @media (max-width:480px) {
+      .header-left .logo { font-size:22px; }
+      .header-left h1 { font-size:17px; }
+    }
+    .ad-slot-inline { margin:18px 0 10px; text-align:center; }
+    .ad-slot-inline .ad-placeholder { display:inline-flex; min-width:100%; }
+    .text-muted { color:#94a3b8; font-size:13px; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <header class="header">
+    <div class="header-left">
+      <div class="logo"><i class="fas fa-solar-panel"></i></div>
+      <div>
+        <h1>Power<span>Calc</span></h1>
+        <span class="tagline">Powered by <strong>GenNext Technologies</strong></span>
+      </div>
+    </div>
+    <div class="ad-placeholder"><i class="fas fa-ads"></i> Ad Unit — 728×90</div>
+  </header>
+
+  <div class="tool-detail">
+    <div class="detail-header">
+      <div class="icon"><i class="fas fa-clock"></i></div>
+      <div><h2>Battery Charging Time Calculator</h2><div class="sub">How long to fully charge your battery?</div></div>
+      <a href="index.html" class="btn-back" style="margin-left:auto;"><i class="fas fa-arrow-left"></i> All Tools</a>
+    </div>
+
+    <div class="calc-row">
+      <div class="calc-group">
+        <label for="capacity">Battery Capacity <span class="unit">(Ah)</span></label>
+        <input type="number" step="any" id="capacity" placeholder="100" />
+      </div>
+    
+      <div class="calc-group">
+        <label for="chargeCurrent">Charge Current <span class="unit">(A)</span></label>
+        <input type="number" step="any" id="chargeCurrent" placeholder="10" />
+      </div>
+    
+      <div class="calc-group">
+        <label for="efficiency">Charge Efficiency <span class="unit">(%)</span></label>
+        <input type="number" step="any" id="efficiency" placeholder="85" />
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button class="btn-calc" id="btnCalc"><i class="fas fa-play"></i> Calculate</button>
+      <button class="btn-reset" id="btnReset"><i class="fas fa-undo-alt"></i> Reset</button>
+    </div>
+
+    <div class="result-box" id="resultBox">
+      <div class="label">Result</div>
+      <div class="value"><span id="resultValue">—</span> <span class="unit" id="resultUnit"></span></div>
+      <div class="note" id="resultNote"></div>
+    </div>
+
+    <div class="ad-slot-inline"><div class="ad-placeholder"><i class="fas fa-ads"></i> Ad Unit — 728×90</div></div>
+
+    <div class="faq-section"><h3>Frequently Asked Questions</h3><div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">Why is charge efficiency important? <span class="faq-toggle">+</span></button>
+          <div class="faq-answer" style="display:none;">Not all energy goes into storage; some is lost as heat. Lead‑acid is ~85%, lithium ~95%.</div>
+        </div>
+      </div></div>
+  </div>
+
+  <footer class="footer">
+    &copy; 2026 <a href="/">PowerCalc</a> — <span class="brand">Powered by GenNext Technologies</span>
+    <br><span class="text-muted">All calculations are estimates. Always consult a professional.</span>
+  </footer>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const btnCalc = document.getElementById('btnCalc');
+    const btnReset = document.getElementById('btnReset');
+    const resultBox = document.getElementById('resultBox');
+    const resultValue = document.getElementById('resultValue');
+    const resultUnit = document.getElementById('resultUnit');
+    const resultNote = document.getElementById('resultNote');
+
+    const inputs = {};
+    inputs['capacity'] = document.getElementById('capacity');
+inputs['chargeCurrent'] = document.getElementById('chargeCurrent');
+inputs['efficiency'] = document.getElementById('efficiency');
+
+    function doCalc() {
+      const vals = {};
+      let valid = true;
+      vals['capacity'] = inputs['capacity'].value; if (inputs['capacity'].value.trim() === '') valid = false;
+vals['chargeCurrent'] = inputs['chargeCurrent'].value; if (inputs['chargeCurrent'].value.trim() === '') valid = false;
+vals['efficiency'] = inputs['efficiency'].value; if (inputs['efficiency'].value.trim() === '') valid = false;
+      if (!valid) { resultBox.classList.remove('show'); return; }
+      try {
+        const calcFn = new Function('vals', `const cap = parseFloat(vals.capacity) || 0; const curr = parseFloat(vals.chargeCurrent) || 0; const eff = (parseFloat(vals.efficiency) || 85) / 100; if (cap <= 0 || curr <= 0 || eff <= 0) return null; const hours = cap / (curr * eff); return { value: hours.toFixed(2), unit: 'hours', note: (hours * 60).toFixed(0) + ' minutes · ' + eff * 100 + '% efficiency' };`);
+        const result = calcFn(vals);
+        if (result === null) { resultBox.classList.remove('show'); return; }
+        resultValue.textContent = result.value;
+        resultUnit.textContent = result.unit;
+        resultNote.textContent = result.note || '';
+        resultBox.classList.add('show');
+      } catch (e) {
+        console.error(e);
+        resultValue.textContent = 'Error';
+        resultUnit.textContent = '';
+        resultNote.textContent = 'Check console for details';
+        resultBox.classList.add('show');
+      }
+    }
+
+    btnCalc.addEventListener('click', doCalc);
+    Object.values(inputs).forEach(el => {
+      if (el) el.addEventListener('keydown', e => { if (e.key === 'Enter') doCalc(); });
+    });
+    let timeout = null;
+    Object.values(inputs).forEach(el => {
+      if (el) el.addEventListener('input', () => {
+        clearTimeout(timeout);
+        timeout = setTimeout(doCalc, 400);
+      });
+    });
+    btnReset.addEventListener('click', () => {
+      Object.values(inputs).forEach(el => { if (el) el.value = ''; });
+      resultBox.classList.remove('show');
+    });
+
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const expanded = this.getAttribute('aria-expanded') === 'true' ? false : true;
+        this.setAttribute('aria-expanded', expanded);
+        const answer = this.nextElementSibling;
+        answer.style.display = expanded ? 'block' : 'none';
+        this.querySelector('.faq-toggle').textContent = expanded ? '−' : '+';
+      });
+    });
+  });
+</script>
+</body>
+</html>
